@@ -26,6 +26,7 @@ RUN bundle config set --local deployment 'true' && \
     SECRET_KEY_BASE=placeholder bin/rails assets:precompile && \
     mkdir -p tmp/pids tmp/cache tmp/sockets && \
     chown -R rails:rails tmp
+RUN mkdir -p /app/tmp && chown -R rails:rails /app/tmp
 EXPOSE 3000
 USER rails
 CMD ["bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
