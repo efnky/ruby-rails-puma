@@ -23,7 +23,9 @@ COPY --from=builder /app/vendor/bundle /app/vendor/bundle
 COPY --chown=rails:rails . .
 RUN bundle config set --local deployment 'true' && \
     bundle config set --local without 'development test' && \
-    SECRET_KEY_BASE=placeholder bin/rails assets:precompile
+    SECRET_KEY_BASE=placeholder bin/rails assets:precompile && \
+    mkdir -p tmp/pids tmp/cache tmp/sockets && \
+    chown -R rails:rails tmp
 EXPOSE 3000
 USER rails
 CMD ["bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
